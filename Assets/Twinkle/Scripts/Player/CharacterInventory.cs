@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class CharacterInventory : MonoBehaviour {
 
     public int selectedSlot;
-    public List<SoundModel> inventory = new List<SoundModel>();
+    public List<string> content = new List<string>();
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +19,6 @@ public class CharacterInventory : MonoBehaviour {
 
     private int WrapIndex(int index)
     {
-        return index % inventory.Count;
+        return index % content.Count;
     }
 }

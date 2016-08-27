@@ -45,9 +45,9 @@ public class CharacterCollector : MonoBehaviour {
 	    {
 	        if (Input.GetKeyDown(KeyCode.Space))
 	        {
-	            if (!inventory.inventory.Any((sound) => sound.guid == selectedSound.model.guid))
+	            if (!inventory.content.Any((sound) => sound == selectedSound.selectedSoundId))
 	            {
-	                inventory.inventory.Add(selectedSound.model);
+	                inventory.content.Add(selectedSound.selectedSoundId);
 	            }
 	            Destroy(selectedSound.gameObject);
 	        }
