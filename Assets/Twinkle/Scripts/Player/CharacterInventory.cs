@@ -17,8 +17,12 @@ public class CharacterInventory : MonoBehaviour {
 	
 	}
 
-    private int WrapIndex(int index)
+    public int WrapIndex(int index)
     {
-        return index % content.Count;
+        if (content.Count <= 0)
+        {
+            return 0;
+        }
+        return (index + content.Count) % content.Count;
     }
 }

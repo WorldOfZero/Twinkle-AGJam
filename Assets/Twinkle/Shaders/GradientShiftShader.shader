@@ -1,4 +1,4 @@
-﻿Shader "Custom/Shader" {
+﻿Shader "Gradients/Normal Gradient Map" {
 	Properties {
 		_SoundMap ("Albedo (RGB)", 2D) = "white" {}
 		_SoundCount("Sounds", Int) = 0
