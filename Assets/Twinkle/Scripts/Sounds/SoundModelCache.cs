@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Audio;
 
 [ExecuteInEditMode]
 public class SoundModelCache : MonoBehaviour {
 
+    public AudioMixerGroup mixer;
     public Dictionary<string, SoundModel> soundModels = new Dictionary<string, SoundModel>();
 
     void Awake()

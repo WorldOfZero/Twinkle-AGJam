@@ -24,7 +24,8 @@ public class MaterialStreamer : MonoBehaviour {
             var scalar = Mathf.Max((range - distance.magnitude) / range, 0);
             normalizedVector *= scalar;
             texture.SetPixel(x, 0, new Color(0.5f + 0.5f * normalizedVector.x, 0.5f + 0.5f * normalizedVector.y, 0.5f + 0.5f * normalizedVector.z));
-            texture.SetPixel(x, 1, sounds[x].color);
+            float currentTime = (sounds[x].audioSource.time / sounds[x].audioSource.clip.length);
+            texture.SetPixel(x, 1, Color.Lerp(Color.black, sounds[x].color, sounds[x].viewModel.soundIntensityGraph.Evaluate(currentTime)));
 
             vector = distance;
         }

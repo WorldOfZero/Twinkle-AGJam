@@ -13,4 +13,5 @@ public class SoundModel : MonoBehaviour{
     public float volume = 1;
     [Range(-3,3)]
     public float pitch = 1;
+    public AnimationCurve soundIntensityGraph = new AnimationCurve();
 }

@@ -49,7 +49,8 @@ public class CharacterCollector : MonoBehaviour {
 	            if (!inventory.content.Any((sound) => sound == selectedSound.selectedSoundId))
 	            {
 	                inventory.content.Add(selectedSound.selectedSoundId);
-	            }
+                    inventory.UpdateStoredSound();
+                }
 	            Destroy(selectedSound.gameObject);
 	        }
 	    }

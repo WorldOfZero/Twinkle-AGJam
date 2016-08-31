@@ -1,12 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundController : MonoBehaviour {
 
     public string selectedSoundId;
     public bool selected;
+    public AudioSource audioSource;
 
     public Color color
     {
@@ -14,7 +16,7 @@ public class SoundController : MonoBehaviour {
     }
 
     private SoundModelCache cache;
-    private SoundModel viewModel
+    public SoundModel viewModel
     {
         get {
             if (cache == null)
@@ -28,7 +30,14 @@ public class SoundController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         var audioclip = Resources.Load<AudioClip>(viewModel.sound);
-        var audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        audioSource.outputAudioMixerGroup = cache.mixer;
+        audioSource.spatialBlend = 1;
+        audioSource.loop = true;
         audioSource.clip = audioclip;
         audioSource.volume = viewModel.volume;
         audioSource.pitch = viewModel.pitch;
