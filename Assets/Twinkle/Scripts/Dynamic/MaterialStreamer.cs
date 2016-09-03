@@ -19,6 +19,8 @@ public class MaterialStreamer : MonoBehaviour {
         texture.filterMode = FilterMode.Point;
 	    for (int x = 0; x < sounds.Length; ++x)
 	    {
+            if (sounds[x] == null || sounds[x].audioSource == null) continue;
+
             var distance = sounds[x].transform.position - this.transform.position;
             var normalizedVector = distance.normalized;
             var scalar = Mathf.Max((range - distance.magnitude) / range, 0);

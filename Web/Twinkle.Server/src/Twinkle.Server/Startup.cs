@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Twinkle.Server.Models;
 
 namespace Twinkle.Server
 {
@@ -33,6 +35,11 @@ namespace Twinkle.Server
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            // Configure Entity Framework:
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<TwinkleDataContext>(options =>
+                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -54,6 +61,18 @@ namespace Twinkle.Server
             app.UseStaticFiles();
 
             app.UseMvc();
+
+            // For more details on creating database during deployment see http://go.microsoft.com/fwlink/?LinkID=615859
+            try
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                    .CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<TwinkleDataContext>()
+                         .Database.Migrate();
+                }
+            }
+            catch { }
         }
 
         // Entry point for the application.
