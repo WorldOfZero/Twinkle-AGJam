@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Rewired;
 
 public class WorldSelector : MonoBehaviour {
 
@@ -8,23 +9,26 @@ public class WorldSelector : MonoBehaviour {
 
     private float timer;
 
+    public int playerId;
+    private Player player;
+
 	// Use this for initialization
 	void Start () {
-	
+        player = ReInput.players.GetPlayer(playerId);
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        var horizontal = Input.GetAxis("Horizontal");
+        var horizontal = player.GetAxis("Slide");
         if (timer <= 0)
 	    {
-	        if (horizontal > 0.5f)
+	        if (horizontal > 0f)
 	        {
 	            timer = delayPeriod;
 	            controller.index += 1;
 	        }
-	        else if (horizontal < -0.5f)
+	        else if (horizontal < 0f)
 	        {
 	            timer = delayPeriod;
 	            controller.index -= 1;

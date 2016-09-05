@@ -23,6 +23,9 @@ namespace Twinkle.Server.Migrations
 
                     b.Property<string>("DataBlob");
 
+                    b.Property<string>("WorldId")
+                        .IsRequired();
+
                     b.HasKey("Id");
                 });
         }

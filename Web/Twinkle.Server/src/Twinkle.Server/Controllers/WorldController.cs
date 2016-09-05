@@ -37,14 +37,31 @@ namespace Twinkle.Server.Controllers
 
         // POST api/values
         [HttpPost]
-        public GameWorldData Post([FromBody]GameWorldData world)
+        public GameWorldData Post([FromBody]GameWorldData worldData)
         {
-            string serializedBlob = JsonConvert.SerializeObject(world);
+            if (worldData.Sounds.Length == 0)
+            {
+                return worldData;
+            }
 
-            _dbContext.Worlds.Add(new WorldModel() { DataBlob = serializedBlob });
+            string serializedBlob = JsonConvert.SerializeObject(worldData);
+            try
+            {
+                var updatedWorld = _dbContext.Worlds.First((world) => world.WorldId == worldData.UserId);
+                updatedWorld.DataBlob = serializedBlob;
+                _dbContext.Worlds.Update(updatedWorld);
+            }
+            catch (InvalidOperationException exception)
+            {
+                _dbContext.Worlds.Add(new WorldModel() {
+                    WorldId = worldData.UserId,
+                    DataBlob = serializedBlob
+                });
+            }
+            
             _dbContext.SaveChanges();
 
-            return world;
+            return worldData;
         }
     }
 }

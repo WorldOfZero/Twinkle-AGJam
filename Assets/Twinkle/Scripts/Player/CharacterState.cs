@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Rewired;
 using UnityEngine.Audio;
 
 public enum CharacterConstructionState
@@ -34,14 +35,18 @@ public class CharacterState : MonoBehaviour {
     public MonoBehaviour[] exploringBehaviors;
     public MonoBehaviour[] buildingBehaviors;
 
+    public int playerId;
+    private Player player;
+
 	// Use this for initialization
 	void Start () {
         UpdateSoundState();
+        player = ReInput.players.GetPlayer(playerId);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (player.GetButtonDown("ModeChange"))
         {
             state = state == CharacterConstructionState.Exploring ? CharacterConstructionState.Building : CharacterConstructionState.Exploring;
         }

@@ -25,11 +25,18 @@ public class CharacterInventory : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         cache = FindObjectOfType<SoundModelCache>();
+        content = InventoryIO.Load();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	}
+
+    public void AddToInventory(string id)
+    {
+        content.Add(id);
+        InventoryIO.Save(content);
+    }
 
     public void UpdateStoredSound()
     {

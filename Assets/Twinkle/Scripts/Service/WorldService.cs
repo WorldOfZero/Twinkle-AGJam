@@ -7,7 +7,7 @@ using System.Net;
 
 public class WorldService {
 
-    private readonly string host = @"http://localhost:28871/api/";
+    private readonly string host = @"http://twinkleserver20160904025814.azurewebsites.net/api/";
     private readonly string path = @"world";
 
     public WorldService()

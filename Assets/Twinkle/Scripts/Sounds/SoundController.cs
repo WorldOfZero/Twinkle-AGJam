@@ -10,6 +10,10 @@ public class SoundController : MonoBehaviour {
     public bool selected;
     public AudioSource audioSource;
 
+    public float soundFade = 1;
+    public bool destroyed = false;
+    private float timer = 0;
+
     public Color color
     {
         get { return viewModel.soundColor; }
@@ -46,6 +50,20 @@ public class SoundController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+	    if (!destroyed)
+	    {
+	        timer = Mathf.Min(timer + Time.deltaTime, soundFade);
+	    }
+	    else
+	    {
+            timer -= Time.deltaTime;
+	        if (timer < 0)
+	        {
+                Destroy(gameObject);
+	        }
+	    }
+
+        audioSource.volume = viewModel.volume * (timer / soundFade);
 	}
 
     void OnDrawGizmos()

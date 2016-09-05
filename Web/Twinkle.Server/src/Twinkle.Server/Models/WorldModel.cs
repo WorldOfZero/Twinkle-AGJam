@@ -10,6 +10,9 @@ namespace Twinkle.Server.Models
     {
         [Key]
         public long Id { get; set; }
+        
+        [Required]
+        public string WorldId { get; set; }
 
         public string DataBlob { get; set; }
     }

@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using System.Collections;
-using UnityEditor;
 
 [Serializable]
 public class GameWorldsCollection
@@ -12,9 +10,19 @@ public class GameWorldsCollection
 [Serializable]
 public class GameWorldData
 {
-    public string UserId;
+    public string UserId = Guid.NewGuid().ToString();
     public DateTime CreatedDate;
-    public SoundData[] Sounds;
+    public SoundData[] Sounds = new SoundData[0];
+
+    public override bool Equals(object obj)
+    {
+        var gameWorld = obj as GameWorldData;
+        if (gameWorld != null)
+        {
+            return String.Equals(UserId, gameWorld.UserId, StringComparison.InvariantCultureIgnoreCase);
+        }
+        return base.Equals(obj);
+    }
 }
 
 [Serializable]
